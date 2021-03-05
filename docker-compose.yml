@@ -1,0 +1,23 @@
+version: '3.5'
+
+services:
+  mysqlx:
+    image: 'mysql:8.0'
+    volumes:
+      - 'mysqlx-data:/var/lib/mysql'
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_ROOT_PASSWORD}'
+    ports:
+      - '${FORWARD_DB_PORT:-3306}:3306'
+    networks:
+      - mysqlx_net
+    
+networks:
+  mysqlx_net:
+    driver: bridge
+    name: mysqlx_network
+    
+volumes:
+  mysqlx-data:
+      driver: local
